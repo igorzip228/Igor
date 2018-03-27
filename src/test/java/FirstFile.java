@@ -1,41 +1,76 @@
-import java.io.IOException;// зайти в папку , гит инит.
+import org.testng.Assert;
+import org.testng.annotations.Test;
 
 public class FirstFile {
-    public static void main(String[] args) throws IOException {
-        // String[] testData = { "0975156900", "(097)5156900", "(097)515-69-00", "(097)51-56-900", "+380975156900",
-        //         "+38 097 515 69 00" };
-    
-        test1_isPhone();
-        test2_isPhone();
-    }
+
+
 
     public static boolean isPhone(String text) {
         String regex = "(?:\\+38)? ?(?:0\\d{2}|\\(0\\d{2}\\)) ?\\d{2}(?:\\d{3}|\\d[- ]\\d{2}[- ]|[ -]\\d{2}[ -]\\d)\\d{2}";
         return text.matches(regex);
     }
 
-    public static void test1_isPhone() {
+    @Test
+    public static void test1_ne() {
         String testData = "0975156900";
-
         boolean result = isPhone(testData);
-
-        if (result == true) {
-            System.out.println("Test1 passed");
-        } else {
-            System.out.println("Test1 failed");
-        }
+        Assert.assertTrue(result, "Test 1 failed");
     }
 
+    @Test
     public static void test2_isPhone() {
-        String testData = "asdaddasds";
-
+        String testData = "gdfdgdgd";
         boolean result = isPhone(testData);
+        Assert.assertFalse(result, "test 2 failed");
+    }
 
-        if (result == false) {
-            System.out.println("Test2 passed");
-        } else {
-            System.out.println("Test2 failed");
-        }
+    @Test
+    public static void test3_isPhone() {
+        String testData = "+380676968103";
+        boolean result = isPhone(testData);
+        Assert.assertTrue(result, "test 3 failed");
+    }
+
+    @Test
+    public static void test4_isPhone() {
+        String testData = "380676968103";
+        boolean result = isPhone(testData);
+        Assert.assertTrue(result, "test 4 failed");
+    }
+
+    @Test
+    public static void test5_isPhone() {
+        String testData = "++!@#$%^&";
+        boolean result = isPhone(testData);
+        Assert.assertFalse(result, "test 5 failed");
+    }
+
+    @Test
+    public static void test6_isPhone() {
+        String testData = "380676968103333";
+        boolean result = isPhone(testData);
+        Assert.assertFalse(result, "test 6 failed");
+    }
+
+    @Test
+    public static void test7_isPhone() {
+        String testData = "+38(067) 69 68 103";
+        boolean result = isPhone(testData);
+        Assert.assertTrue(result, "test 7 failed");
+    }
+
+    @Test
+    public static void test8_isPhone() {
+        String testData = "38/067/6 9/68 1-03";
+        boolean result = isPhone(testData);
+        Assert.assertFalse(result, "test 8 failed");
+    }
+
+    @Test
+    public static void test9_isPhone() {
+        String testData = "+38(067)-6968-103";
+        boolean result = isPhone(testData);
+        Assert.assertTrue(result, "test 9 failed");
     }
 }
 
